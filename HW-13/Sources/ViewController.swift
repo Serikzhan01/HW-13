@@ -7,8 +7,8 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource {
-  
+class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+    
     var settingsRows: [[SettingsRow]]?
     
     // MARK: - Outlets
@@ -17,6 +17,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.register(TableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.dataSource = self
+        tableView.delegate = self
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -35,6 +36,7 @@ class ViewController: UIViewController, UITableViewDataSource {
         view.backgroundColor = .white
         title = "Настройки"
         navigationController?.navigationBar.prefersLargeTitles = true
+        settingsRows = SettingsRow.settingsRows
         view.addSubview(tableView)
     }
     
@@ -49,38 +51,34 @@ class ViewController: UIViewController, UITableViewDataSource {
     
     // MARK: - Actions
     
-    
-    
-    
-    
+  
     // MARK: - Extensions
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return settingsRows?.count ?? 0
-       }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return settingsRows?[section].count ?? 0
-       }
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
         cell?.settingRow = settingsRows?[indexPath.section][indexPath.row]
-        cell?.accessoryType = .detailDisclosureButton
+        cell?.accessoryType = .disclosureIndicator
         return cell ?? UITableViewCell()
     }
     
-    func tableView( tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            45
-        }
-
-//        func tableView( tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//            let viewController = DetailView()
-//            tableView.deselectRow(at: indexPath, animated: true)
-//            viewController.tabs = tabsSetting?[indexPath.section][indexPath.row]
-//            navigationController?.pushViewController(viewController, animated: true)
-//        }
-
+    func tableView( _ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        40
+    }
+    
+    func tableView( _ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewController = DetailViewController()
+        tableView.deselectRow(at: indexPath, animated: true)
+        viewController.settingRow = settingsRows?[indexPath.section][indexPath.row]
+        navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 

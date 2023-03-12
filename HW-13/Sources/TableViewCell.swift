@@ -39,8 +39,9 @@ class TableViewCell: UITableViewCell {
     private lazy var settingsStatus: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        label.textColor = .systemGray
+        label.textColor = .systemGray2
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .right
         return label
     }()
     
@@ -71,23 +72,33 @@ class TableViewCell: UITableViewCell {
     private func setupLayout() {
         NSLayoutConstraint.activate([
             settingsIcon.topAnchor.constraint(equalTo: contentView.topAnchor),
-            settingsIcon.leadingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                                  constant: 15),
-            settingsIcon.heightAnchor.constraint(equalToConstant: 30)
+            settingsIcon.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
+                                                  constant: 5),
+            settingsIcon.heightAnchor.constraint(equalToConstant: 40),
+            settingsIcon.widthAnchor.constraint(equalToConstant: 40)
         ])
         
         NSLayoutConstraint.activate([
-            settingsName.topAnchor.constraint(equalTo: contentView.topAnchor),
+            settingsName.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                              constant: 12),
             settingsName.leadingAnchor.constraint(equalTo: settingsIcon.trailingAnchor,
-                                                  constant: 50),
-            settingsName.widthAnchor.constraint(equalToConstant: 100)
+                                                  constant: 10),
+           
         ])
-        
+
         NSLayoutConstraint.activate([
-            settingsStatus.topAnchor.constraint(equalTo: contentView.topAnchor),
-            settingsStatus.leadingAnchor.constraint(equalTo: settingsName.trailingAnchor,
-                                                  constant: 30),
-            settingsStatus.widthAnchor.constraint(equalToConstant: 100)
+            settingsStatus.topAnchor.constraint(equalTo: contentView.topAnchor,
+                                                constant: 12),
+            settingsStatus.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
+                                                     constant: -10),
+            settingsStatus.widthAnchor.constraint(equalToConstant: 150),
+            
         ])
     }
+    
+    override func prepareForReuse() {
+            super.prepareForReuse()
+            self.accessoryView = .none
+            self.settingRow = nil
+        }
 }
