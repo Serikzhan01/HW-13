@@ -62,11 +62,7 @@ class TableViewCell: UITableViewCell {
         contentView.addSubview(settingsIcon)
         contentView.addSubview(settingsName)
         contentView.addSubview(settingsStatus)
-        
-//        addSubview(settingsIcon)
-//        addSubview(settingsName)
-//        addSubview(settingsStatus)
-//
+
     }
     
     private func setupLayout() {

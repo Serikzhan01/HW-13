@@ -14,6 +14,7 @@
 		8C63FDF329BB907600121C8D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C63FDF129BB907600121C8D /* LaunchScreen.storyboard */; };
 		8C63FE0029BB98D600121C8D /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C63FDFF29BB98D600121C8D /* TableViewCell.swift */; };
 		8C63FE0229BB990F00121C8D /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C63FE0129BB990F00121C8D /* Model.swift */; };
+		8C63FE2829BE133100121C8D /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C63FE2729BE133100121C8D /* DetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		8C63FDF429BB907600121C8D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8C63FDFF29BB98D600121C8D /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		8C63FE0129BB990F00121C8D /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		8C63FE2729BE133100121C8D /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				8C63FDEA29BB907300121C8D /* ViewController.swift */,
 				8C63FDFF29BB98D600121C8D /* TableViewCell.swift */,
 				8C63FE0129BB990F00121C8D /* Model.swift */,
+				8C63FE2729BE133100121C8D /* DetailViewController.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 				8C63FE0229BB990F00121C8D /* Model.swift in Sources */,
 				8C63FDEB29BB907300121C8D /* ViewController.swift in Sources */,
 				8C63FE0029BB98D600121C8D /* TableViewCell.swift in Sources */,
+				8C63FE2829BE133100121C8D /* DetailViewController.swift in Sources */,
 				8C63FDE729BB907300121C8D /* AppDelegate.swift in Sources */,
 				8C63FDE929BB907300121C8D /* SceneDelegate.swift in Sources */,
 			);

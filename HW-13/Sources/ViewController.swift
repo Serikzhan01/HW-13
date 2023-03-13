@@ -51,7 +51,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // MARK: - Actions
     
-  
+    
+    
+    
     // MARK: - Extensions
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -65,56 +67,31 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
         cell?.settingRow = settingsRows?[indexPath.section][indexPath.row]
-        cell?.accessoryType = .disclosureIndicator
+        let cellType = settingsRows?[indexPath.section][indexPath.row].visualType
+        let switchButton = UISwitch(frame: .zero) as? UISwitch
+        switchButton?.isOn = true
+        switch cellType {
+        case .switchSelect:
+            cell?.accessoryView = switchButton
+        case .disclosureIndicator:
+            cell?.accessoryType = .disclosureIndicator
+        case .none:
+            cell?.accessoryType = .checkmark
+        }
         return cell ?? UITableViewCell()
     }
-    
-    func tableView( _ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        40
-    }
-    
-    func tableView( _ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let viewController = DetailViewController()
-        tableView.deselectRow(at: indexPath, animated: true)
-        viewController.settingRow = settingsRows?[indexPath.section][indexPath.row]
-        navigationController?.pushViewController(viewController, animated: true)
+
+func tableView( _ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    40
+}
+
+func tableView( _ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    let viewController = DetailViewController()
+    tableView.deselectRow(at: indexPath, animated: true)
+    viewController.settingRow = settingsRows?[indexPath.section][indexPath.row]
+    navigationController?.pushViewController(viewController, animated: true)
+    let cellType = settingsRows?[indexPath.section][indexPath.row].optionsName
+    print("был выбран раздел \(cellType ?? "пока ничего не выбрано")")
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//extension ViewController: UITableViewDataSource, UITableViewDelegate {
-//
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return tabsSetting?.count ?? 0
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return tabsSetting?[section].count ?? 0
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        50
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
-//        cell?.settingsRow = tabsSetting?[indexPath.section][indexPath.row]
-//        cell?.accessoryType = .detailDisclosureButton
-//        return cell ?? UITableViewCell()
-//    }
-//
-//}
