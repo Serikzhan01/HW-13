@@ -9,14 +9,13 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
     
-    var settingRow: SettingsRow? {
+    var setting: SettingsRow? {
         didSet {
-            settingsIcon.image = settingRow?.optionsIcon
-            settingsName.text = settingRow?.optionsName
-            settingsStatus.text = settingRow?.optionsTitle
+            settingsIcon.image = setting?.optionsIcon
+            settingsName.text = setting?.optionsName
+            settingsStatus.text = setting?.optionsTitle
         }
     }
-    
     // MARK: - Outlets
     
     private lazy var settingsIcon: UIImageView = {
@@ -62,7 +61,7 @@ class TableViewCell: UITableViewCell {
         contentView.addSubview(settingsIcon)
         contentView.addSubview(settingsName)
         contentView.addSubview(settingsStatus)
-
+        
     }
     
     private func setupLayout() {
@@ -73,15 +72,13 @@ class TableViewCell: UITableViewCell {
             settingsIcon.heightAnchor.constraint(equalToConstant: 40),
             settingsIcon.widthAnchor.constraint(equalToConstant: 40)
         ])
-        
         NSLayoutConstraint.activate([
             settingsName.topAnchor.constraint(equalTo: contentView.topAnchor,
                                               constant: 12),
             settingsName.leadingAnchor.constraint(equalTo: settingsIcon.trailingAnchor,
                                                   constant: 10),
-           
+            
         ])
-
         NSLayoutConstraint.activate([
             settingsStatus.topAnchor.constraint(equalTo: contentView.topAnchor,
                                                 constant: 12),
@@ -93,8 +90,8 @@ class TableViewCell: UITableViewCell {
     }
     
     override func prepareForReuse() {
-            super.prepareForReuse()
-            self.accessoryView = .none
-            self.settingRow = nil
-        }
+        super.prepareForReuse()
+        self.accessoryView = .none
+        self.setting = nil
+    }
 }

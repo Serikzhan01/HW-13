@@ -1,15 +1,21 @@
 //
-//  ViewController.swift
+//  SettingsView.swift
 //  HW-13
 //
-//  Created by Serikzhan on 10.03.2023.
+//  Created by Serikzhan on 26.03.2023.
 //
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+protocol SettingViewDelegate: AnyObject {
+    func selectedCell(selectedSetting: SettingsRow)
+}
+
+class SettingView: UIView {
     
     var settingsRows: [[SettingsRow]]?
+    
+    weak var delegate: SettingViewDelegate?
     
     // MARK: - Outlets
     
@@ -24,8 +30,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     // MARK: - Lifecycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    init() {
+        super.init(frame: .zero)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
         setupHierarchy()
         setupLayout()
     }
@@ -33,28 +48,23 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK: - Setup
     
     private func setupHierarchy() {
-        view.backgroundColor = .white
-        title = "Настройки"
-        navigationController?.navigationBar.prefersLargeTitles = true
         settingsRows = SettingsRow.settingsRows
-        view.addSubview(tableView)
+        addSubview(tableView)
     }
     
     private func setupLayout() {
         NSLayoutConstraint.activate([
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            tableView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            tableView.topAnchor.constraint(equalTo: self.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
-    
-    // MARK: - Actions
-    
-    
-    
-    
-    // MARK: - Extensions
+}
+
+
+// MARK: - Extensions
+extension SettingView: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return settingsRows?.count ?? 0
@@ -66,10 +76,10 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? TableViewCell
-        cell?.settingRow = settingsRows?[indexPath.section][indexPath.row]
+        cell?.setting = settingsRows?[indexPath.section][indexPath.row]
         let cellType = settingsRows?[indexPath.section][indexPath.row].visualType
-        let switchButton = UISwitch(frame: .zero) as? UISwitch
-        switchButton?.isOn = true
+        let switchButton = UISwitch(frame: .zero) as UISwitch
+        switchButton.isOn = true
         switch cellType {
         case .switchSelect:
             cell?.accessoryView = switchButton
@@ -80,18 +90,14 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         }
         return cell ?? UITableViewCell()
     }
-
-func tableView( _ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    40
-}
-
-func tableView( _ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    let viewController = DetailViewController()
-    tableView.deselectRow(at: indexPath, animated: true)
-    viewController.settingRow = settingsRows?[indexPath.section][indexPath.row]
-    navigationController?.pushViewController(viewController, animated: true)
-    let cellType = settingsRows?[indexPath.section][indexPath.row].optionsName
-    print("был выбран раздел \(cellType ?? "пока ничего не выбрано")")
+    
+    func tableView( _ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        40
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let selectedSetting = settingsRows?[indexPath.section][indexPath.row] {
+            delegate?.selectedCell(selectedSetting: selectedSetting)
+        }
     }
 }
-

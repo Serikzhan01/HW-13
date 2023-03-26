@@ -1,15 +1,15 @@
 //
-//  DetailViewController.swift
+//  DetailView.swift
 //  HW-13
 //
-//  Created by Serikzhan on 12.03.2023.
+//  Created by Serikzhan on 26.03.2023.
 //
 
 import UIKit
 
-final class DetailViewController: UIViewController {
+final class DetailView: UIView {
     
-    var settingRow: SettingsRow?
+    var setting: SettingsRow?
     
     // MARK: - Outlets
     
@@ -31,31 +31,38 @@ final class DetailViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     
     // MARK: - Lifecycle
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemGray6
+    init() {
+        super.init(frame: .zero)
+        commonInit()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        commonInit()
+    }
+    
+    private func commonInit() {
         setupHierarchy()
         setupLayout()
-        fillSettings()
     }
     
     // MARK: - Setup
     
     private func setupHierarchy() {
-        view.addSubview(imageView)
-        view.addSubview(label)
-
+        addSubview(imageView)
+        addSubview(label)
+        backgroundColor = .systemGray6
     }
     
     private func setupLayout() {
         
         NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             imageView.heightAnchor.constraint(equalToConstant: 250),
             imageView.widthAnchor.constraint(equalToConstant: 250)
         ])
@@ -68,8 +75,8 @@ final class DetailViewController: UIViewController {
         ])
     }
     
-    private func fillSettings() {
-        imageView.image = settingRow?.optionsIcon
-        label.text = settingRow?.optionsName
+    func fillSettings(_: SettingsRow?) {
+        imageView.image = setting?.optionsIcon
+        label.text = setting?.optionsName
     }
 }
